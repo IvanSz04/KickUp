@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">KickUp</string>
+    <string name="app_slogan_splash">No se fracasa hasta que se deja de intentar.</string>
+    <string name="iniciar_sesion">Iniciar Sesion</string>
+    <string name="frase_1">Llego la hora de olvidarte de tus falencias jugando al futbol. Pues con KickUp podras mejorar tu forma de jugar de una manera inigualable.</string>
+    <string name="registrate">Registrate</string>
+</resources>
