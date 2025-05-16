@@ -10,8 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.KickUp"
-        tools:targetApi="31">
+        android:theme="@style/Theme.KickUp">
 
         <activity
             android:name=".Activities.SplashActivity"
@@ -22,11 +21,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"
+
+        <activity
+            android:name=".MainActivity"
             android:exported="false"/>
         <activity
             android:name=".Activities.HomeActivity"
             android:exported="false"/>
+        <activity
+            android:name=".Activities.LogoutActivity"
+            android:exported="false"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
