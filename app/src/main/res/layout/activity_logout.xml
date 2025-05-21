@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.691"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_usarname" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_username" />
 
     <ImageView
         android:id="@+id/imageView_user"
@@ -53,12 +53,12 @@
         android:layout_height="50dp"
         android:layout_marginTop="72dp"
         android:layout_marginEnd="20dp"
-        app:layout_constraintEnd_toStartOf="@+id/editText_usarname"
+        app:layout_constraintEnd_toStartOf="@+id/editText_username"
         app:layout_constraintTop_toBottomOf="@+id/imageView2"
         app:srcCompat="@drawable/usuario" />
 
     <EditText
-        android:id="@+id/editText_usarname"
+        android:id="@+id/editText_username"
         android:layout_width="252dp"
         android:layout_height="51dp"
         android:layout_marginTop="72dp"
@@ -84,7 +84,7 @@
         app:srcCompat="@drawable/bloquear" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button_login"
         android:layout_width="172dp"
         android:layout_height="57dp"
         android:layout_marginTop="92dp"
@@ -153,6 +153,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/button_login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
