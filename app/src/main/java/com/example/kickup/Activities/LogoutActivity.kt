@@ -46,7 +46,7 @@ class LogoutActivity : AppCompatActivity() {
                     if (success) {
                         Toast.makeText(applicationContext, "✅ $message", Toast.LENGTH_SHORT).show()
 
-                        val intent = Intent(this, HomeActivity::class.java)
+                        val intent = Intent(this, MajorActivity::class.java)
                         startActivity(intent)
                         finish()
                     } else {
