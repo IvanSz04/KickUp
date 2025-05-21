@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/azuladoverdoso"
+    app:layout_constraintTop_toTopOf="parent"
+    tools:layout_editor_absoluteX="155dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="115dp"
+            android:layout_height="108dp"
+            android:layout_marginStart="31dp"
+            android:layout_marginTop="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/logo_app" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="198dp"
+            android:layout_height="50dp"
+            android:fontFamily="@font/adlam_display"
+            android:text="KICKUP"
+            android:textAlignment="center"
+            android:textColor="@color/negro"
+            android:textSize="34sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.388"
+            app:layout_constraintStart_toEndOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="@+id/imageView2"
+            app:layout_constraintVertical_bias="0.465" />
+
+        <EditText
+            android:id="@+id/editText_password"
+            android:layout_width="252dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.691"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_usarname" />
+
+        <ImageView
+            android:id="@+id/imageView_user"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="72dp"
+            android:layout_marginEnd="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_usarname"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2"
+            app:srcCompat="@drawable/usuario" />
+
+        <EditText
+            android:id="@+id/editText_usarname"
+            android:layout_width="252dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="72dp"
+            android:ems="10"
+            android:hint="Usuario"
+            android:inputType="text"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.691"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="49dp"
+            android:layout_height="51dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toStartOf="@+id/editText_password"
+            app:layout_constraintHorizontal_bias="0.31"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_user"
+            app:srcCompat="@drawable/bloquear" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="172dp"
+            android:layout_height="57dp"
+            android:layout_marginTop="76dp"
+            android:backgroundTint="#000000"
+            android:text="Crear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.548"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText_password"
+            app:strokeColor="@color/colortext"
+            app:strokeWidth="3dp" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="292dp"
+            android:layout_height="54dp"
+            android:backgroundTint="#000000"
+            android:text="Ingresa con Google"
+            app:icon="@drawable/google_logo"
+            app:iconSize="30dp"
+            app:iconTint="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.588"
+            app:layout_constraintStart_toStartOf="parent"
+            app:strokeColor="@color/colortext"
+            app:strokeWidth="3dp"
+            tools:layout_editor_absoluteY="494dp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="227dp"
+            android:layout_height="38dp"
+            android:layout_marginBottom="16dp"
+            android:text="Registrate"
+            android:textAlignment="center"
+            android:textColor="@color/colortext"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@+id/editText_usarname"
+            tools:layout_editor_absoluteX="120dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
