@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- PERMISOS NECESARIOS PARA LA APP -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -14,6 +19,11 @@
         android:theme="@style/Theme.KickUp"
         android:networkSecurityConfig="@xml/network_security_config">
 
+        <!-- CLAVE DE API DE GOOGLE MAPS O GEOSERVICIOS -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDx6McfYxP_Ar2VVKmEU0Sn5JuVYGsa6oE" />
+
         <activity
             android:name=".Activities.SplashActivity"
             android:exported="true">
@@ -24,14 +34,24 @@
             </intent-filter>
         </activity>
 
+        <!-- DEMÁS ACTIVIDADES DE LA APLICACIÓN -->
         <activity
             android:name=".MainActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Activities.CouncilActivity"
             android:exported="false"/>
         <activity
             android:name=".Activities.HomeActivity"
             android:exported="false"/>
         <activity
+            android:name=".Activities.GeolocationActivity"
+            android:exported="false"/>
+        <activity
             android:name=".Activities.LogoutActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".Activities.RegistrateActivity"
             android:exported="false"/>
         <activity
             android:name=".Activities.MajorActivity"
