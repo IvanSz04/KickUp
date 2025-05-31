@@ -87,7 +87,7 @@
             app:srcCompat="@drawable/bloquear" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnCrear"
             android:layout_width="172dp"
             android:layout_height="57dp"
             android:layout_marginTop="76dp"
@@ -101,7 +101,7 @@
             app:strokeWidth="3dp" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/btnGoogleSignIn"
             android:layout_width="292dp"
             android:layout_height="54dp"
             android:backgroundTint="#000000"
@@ -109,12 +109,14 @@
             app:icon="@drawable/google_logo"
             app:iconSize="30dp"
             app:iconTint="@null"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.588"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnCrear"
+            app:layout_constraintVertical_bias="0.338"
             app:strokeColor="@color/colortext"
-            app:strokeWidth="3dp"
-            tools:layout_editor_absoluteY="494dp" />
+            app:strokeWidth="3dp" />
 
         <TextView
             android:id="@+id/textView8"
