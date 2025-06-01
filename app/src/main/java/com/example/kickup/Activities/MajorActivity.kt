@@ -2,16 +2,19 @@ package com.example.kickup.Activities
 
 import ConsejoAdapter
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.os.Environment
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -25,17 +28,27 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
 import org.json.JSONObject
-import android.view.View
+import java.io.File
+import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MajorActivity : AppCompatActivity() {
 
     private var userIdActual: Int = -1
-
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchEditText: EditText
     private lateinit var consejoAdapter: ConsejoAdapter
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+
+
+    //URI DEL ARCHIVO DE LA FOTO
+    private var photoUri: Uri? = null
+
+    //LANZADOR TAKE A FOTO
+    private lateinit var takePictureLauncher: ActivityResultLauncher<Uri>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,41 +56,59 @@ class MajorActivity : AppCompatActivity() {
 
         //LOGEO CON GOOGLE
         auth = FirebaseAuth.getInstance()
-
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         //RECIBIR ID DEL USUARIO LOGEADO PARA CREAR CONSEJO
         userIdActual = intent.getIntExtra("user_id", -1)
         Log.d("MajorActivity", "userId recibido: $userIdActual")
 
-        val btnUbicacion: FloatingActionButton
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted ->
+            if (isGranted) {
+                abrirCamara()
+            } else {
+                Toast.makeText(this, "Se requieren permisos de cámara", Toast.LENGTH_SHORT).show()
+            }
+        }
 
+        //LANZADOR TAKE A PHOTO
+        takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+            if (success) {
+                Toast.makeText(this, "Te tomaste esta foto", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "No se tomó la foto", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        //DEFINIMOS EL BOTON DE LA CAMARA
+        val btnCamara = findViewById<FloatingActionButton>(R.id.btnCamara)
+        btnCamara.setOnClickListener {
+            val cameraPermission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA)
+
+            if (cameraPermission == PackageManager.PERMISSION_GRANTED) {
+                abrirCamara()
+            } else {
+                requestPermissionLauncher.launch(android.Manifest.permission.CAMERA)
+            }
+        }
 
         //EMPEZAMOS CON LA FUNCION DE UBICACION
-        btnUbicacion = findViewById<FloatingActionButton?>(R.id.btnUbicacion)
-
-        btnUbicacion.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                val intent = Intent(this@MajorActivity, GeolocationActivity::class.java)
-                startActivity(intent)
-            }
-        })
-
+        val btnUbicacion = findViewById<FloatingActionButton>(R.id.btnUbicacion)
+        btnUbicacion.setOnClickListener {
+            val intent = Intent(this@MajorActivity, GeolocationActivity::class.java)
+            startActivity(intent)
+        }
 
         //EMPEZAMOS CON LA FUNCION DE CREAR CONSEJO
         val btnCrearInforme = findViewById<FloatingActionButton>(R.id.btnCrearConsejo)
-        Log.d("MajorActivity", "Botón btnCrearConsejo encontrado: $btnCrearInforme")
-
         btnCrearInforme.setOnClickListener {
-            Log.d("MajorActivity", "Botón Crear Informe presionado")
             if (userIdActual == -1) {
-                Toast.makeText(this, "Usuario no válido para crear informe", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "Usuario no válido para crear informe", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             val intent = Intent(this, CouncilActivity::class.java)
@@ -85,8 +116,7 @@ class MajorActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        //EMPEZAMOS CON LA FUNCION DE BUSCAR
+        //AQUI LLAMAMOS A NUESTRO RECYCLERVIEW
         recyclerView = findViewById(R.id.rvConsejo)
         searchEditText = findViewById(R.id.editBuscarConsejo)
 
@@ -95,15 +125,60 @@ class MajorActivity : AppCompatActivity() {
         consejoAdapter = ConsejoAdapter(emptyList()) { }
         recyclerView.adapter = consejoAdapter
 
-        searchEditText.addTextChangedListener(object : TextWatcher {
+        searchEditText.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 buscarConsejos(s.toString())
             }
-            override fun afterTextChanged(s: Editable?) {}
+            override fun afterTextChanged(s: android.text.Editable?) {}
         })
     }
 
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1001) {
+            if (grantResults.isNotEmpty() && grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
+                abrirCamara()
+            } else {
+                Toast.makeText(this, "Se requieren permisos de cámara y almacenamiento", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    //ESTE ES METODO PARA ABRIR LA CAMARA
+    private fun abrirCamara() {
+        val photoFile: File? = try {
+            crearArchivoImagen()
+        } catch (ex: IOException) {
+            Toast.makeText(this, "Error al crear archivo de imagen", Toast.LENGTH_SHORT).show()
+            null
+        }
+
+        photoFile?.also {
+            photoUri = FileProvider.getUriForFile(
+                this,
+                "${packageName}.fileprovider",
+                it
+            )
+            takePictureLauncher.launch(photoUri)
+        }
+    }
+
+    //NOS CREA EL ARCHIVO TEMPORAL AL MOMENTO DE TOMAR LA FOTO
+    @Throws(IOException::class)
+    private fun crearArchivoImagen(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        )
+    }
 
     //EMPEZAMOS CON LA FUNCION DE LEER U OBTENER CONSEJOS
     private fun buscarConsejos(query: String) {
@@ -262,8 +337,6 @@ class MajorActivity : AppCompatActivity() {
             }
             .show()
     }
-
-
 }
 
 
