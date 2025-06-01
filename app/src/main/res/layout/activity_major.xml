@@ -85,6 +85,17 @@
         android:layout_marginBottom="16dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnCamara"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@id/btnUbicacion"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Abrir cámara"
+        android:src="@android:drawable/ic_menu_camera" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnUbicacion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -105,4 +116,6 @@
         android:layout_margin="16dp"
         android:contentDescription="Crear nuevo informe"
         android:src="@android:drawable/ic_input_add" />
+
+
 </RelativeLayout>
