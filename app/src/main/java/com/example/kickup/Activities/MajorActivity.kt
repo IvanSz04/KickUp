@@ -42,6 +42,7 @@ class MajorActivity : AppCompatActivity() {
     private lateinit var searchEditText: EditText
     private lateinit var consejoAdapter: ConsejoAdapter
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private lateinit var editConsejoLauncher: ActivityResultLauncher<Intent>
 
 
     //URI DEL ARCHIVO DE LA FOTO
@@ -132,6 +133,13 @@ class MajorActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: android.text.Editable?) {}
         })
+
+        //REFRESCA LISTA
+        editConsejoLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                buscarConsejos("")
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -233,7 +241,7 @@ class MajorActivity : AppCompatActivity() {
 
         //REFERENCIAS DE LAS VISTAS
         val tvUsuario = dialogView.findViewById<TextView>(R.id.tvDetalleUsuario)
-        val tvTitulo = dialogView.findViewById<TextView>(R.id.tvDetalleTitulo)
+        val tvTittle = dialogView.findViewById<TextView>(R.id.tvDetalleTitulo)
         val tvDificultad = dialogView.findViewById<TextView>(R.id.tvDetalleDificultad)
         val tvPosicion = dialogView.findViewById<TextView>(R.id.tvDetallePosicion)
         val tvObjetivos = dialogView.findViewById<TextView>(R.id.tvDetalleObjetivos)
@@ -247,7 +255,7 @@ class MajorActivity : AppCompatActivity() {
 
         //ASIGNAMOS LOS VALORES
         tvUsuario.text = "ID Usuario: ${consejo.user_id}"
-        tvTitulo.text = "Título: ${consejo.tittle}"
+        tvTittle.text = "Título: ${consejo.tittle}"
         tvDificultad.text = "Dificultad: ${consejo.difficulty}"
         tvPosicion.text = "Posición: ${consejo.position}"
         tvObjetivos.text = "Objetivos: ${consejo.goals}"
@@ -286,19 +294,18 @@ class MajorActivity : AppCompatActivity() {
 
     //DEFINIMOS FUNCION DE EDITAR CONSEJO
     private fun editarConsejo(consejo: Consejos) {
-        val intent = Intent(this, CouncilActivity::class.java)
-
-        //PASAR DATOS PARA LA EDICION
-        intent.putExtra("edit_consejo_id", consejo.id)
-        intent.putExtra("edit_consejo_tittle", consejo.tittle)
-        intent.putExtra("edit_consejo_difficulty", consejo.difficulty)
-        intent.putExtra("edit_consejo_position", consejo.position)
-        intent.putExtra("edit_consejo_goals", consejo.goals)
-        intent.putExtra("edit_consejo_csj1", consejo.csj1)
-        intent.putExtra("edit_consejo_csj2", consejo.csj2)
-        intent.putExtra("edit_consejo_csj3", consejo.csj3)
-        intent.putExtra("user_id", consejo.user_id) // para referencia
-        startActivity(intent)
+        val intent = Intent(this, CouncilActivity::class.java).apply {
+            putExtra("user_id", userIdActual)
+            putExtra("edit_consejo_id", consejo.id)
+            putExtra("edit_consejo_tittle", consejo.tittle)
+            putExtra("edit_consejo_difficulty", consejo.difficulty)
+            putExtra("edit_consejo_position", consejo.position)
+            putExtra("edit_consejo_goals", consejo.goals)
+            putExtra("edit_consejo_csj1", consejo.csj1)
+            putExtra("edit_consejo_csj2", consejo.csj2)
+            putExtra("edit_consejo_csj3", consejo.csj3)
+        }
+        editConsejoLauncher.launch(intent)
     }
 
 

@@ -113,7 +113,9 @@ class CouncilActivity : AppCompatActivity() {
                 val message = response.optString("message", "No se recibió mensaje")
                 Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
                 if (success) {
-                    finish()  //VUELVE A LA ACTIVIDAD ANTERIOR
+                    Toast.makeText(this, "Consejo actualizado", Toast.LENGTH_SHORT).show()
+                    setResult(RESULT_OK)
+                    finish()
                 }
             },
             { error ->
@@ -145,10 +147,10 @@ class CouncilActivity : AppCompatActivity() {
         val request = JsonObjectRequest(Request.Method.POST, url, jsonBody,
             { response ->
                 Toast.makeText(this, "Consejo actualizado", Toast.LENGTH_SHORT).show()
+                setResult(RESULT_OK) // ✅ Agrega esto ANTES de finish()
                 finish()
             },
             { error ->
-                //SI OCURRE UN ERROR, SE MUESTRA EN CONSOLA Y EN UN TOAST
                 if (error.networkResponse?.data != null) {
                     val responseString = String(error.networkResponse.data)
                     Log.e("ActualizarConsejo", "Error completo: $responseString")
