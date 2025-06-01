@@ -9,6 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- Título agregado -->
+        <TextView
+            android:id="@+id/tvTituloDetalleConsejo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DETALLE DEL CONSEJO"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingBottom="16dp" />
+
+        <!-- Contenido original -->
         <TextView
             android:id="@+id/tvDetalleUsuario"
             android:layout_width="match_parent"
@@ -22,52 +34,56 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Título: "
-            android:textSize="18sp"
-            android:textStyle="bold"
+            android:textSize="16sp"
             android:paddingBottom="8dp"/>
 
-        <!-- Agrega TextViews para cada campo -->
         <TextView
             android:id="@+id/tvDetalleDificultad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dificultad: "
-            android:paddingBottom="6dp"/>
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvDetallePosicion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Posición: "
-            android:paddingBottom="6dp"/>
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvDetalleObjetivos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Objetivos: "
-            android:paddingBottom="6dp"/>
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvDetalleCsj1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Consejo 1: "
-            android:paddingBottom="6dp"/>
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvDetalleCsj2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Consejo 2: "
-            android:paddingBottom="6dp"/>
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
 
         <TextView
             android:id="@+id/tvDetalleCsj3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Consejo 3: "
-            android:paddingBottom="16dp"/>
+            android:textSize="16sp"
+            android:paddingBottom="8dp"/>
 
         <LinearLayout
             android:orientation="horizontal"
@@ -96,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:text="Cerrar"
                 android:layout_marginStart="8dp"/>
-
         </LinearLayout>
+
     </LinearLayout>
 </ScrollView>
